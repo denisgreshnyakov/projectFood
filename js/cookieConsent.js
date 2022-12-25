@@ -1,5 +1,18 @@
 window.addEventListener("DOMContentLoaded", () => {
-  const storageType = localStorage;
+  const cookieStorage = {
+    getItem: (key) => {
+      const cookies = document.cookie
+        .split(";")
+        .map((cookie) => cookie.split("="))
+        .reduce((acc, [key, value]) => ({ ...acc, [key.trim()]: value }), {});
+      return cookies[key];
+    },
+    setItem: (key, value) => {
+      document.cookie = `${key}=${value};expires=Sun, 16 Jul 3567 06:23:41 GMT`;
+    },
+  };
+
+  const storageType = cookieStorage;
   const consentPropertyType = "site_consent";
 
   //следует ли показывать окно с куки
